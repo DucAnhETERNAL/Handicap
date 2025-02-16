@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{9B543304-3005-4E0D-AA35-6D3E900EDE79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{9B543304-3005-4E0D-AA35-6D3E900EDE79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{ECC13500-442F-4296-92B2-249B596510B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{ECC13500-442F-4296-92B2-249B596510B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E6DDC46C-30C4-4C13-8EDF-C0C08746F58A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E6DDC46C-30C4-4C13-8EDF-C0C08746F58A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Handly", "Handly\Handly.csproj", "{72A684A5-3799-44B4-9315-28D7CE7D4A73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Handly", "Handly\Handly.csproj", "{72A684A5-3799-44B4-9315-28D7CE7D4A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +36,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8460FE11-B02F-48BA-99A9-20635EF338C4}
 	EndGlobalSection
 EndGlobal

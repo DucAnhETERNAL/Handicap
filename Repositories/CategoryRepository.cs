@@ -30,6 +30,11 @@ namespace Repositories
             return await CategoryDAO.Instance.GetCategoryByIdAsync(categoryId);
         }
 
+        public async Task<int> GetCategoryCount()
+        {
+            return await CategoryDAO.Instance.GetCategoryCount();
+        }
+
         public async Task<bool> UpdateCategoryAsync(int categoryId, string categoryName)
         {
             return await CategoryDAO.Instance.UpdateCategoryAsync(categoryId, categoryName);

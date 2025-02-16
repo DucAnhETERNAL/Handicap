@@ -45,6 +45,51 @@ namespace Repositories
         {
             await Task.Run(() => { });
         }
+
+        public async Task<IEnumerable<User>> GetUserAll()
+        {
+            return await UserDAO.Instance.GetUserAll();
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            return await UserDAO.Instance.GetUserById(id);
+        }
+
+        public async Task Add(User user)
+        {
+            await UserDAO.Instance.Add(user);
+        }
+
+        public async Task Update(User user)
+        {
+            await UserDAO.Instance.Update(user);
+        }
+
+        public async Task Delete(int id)
+        {
+            await UserDAO.Instance.Delete(id);
+        }
+
+        public async Task<int> GetUserCount()
+        {
+            return await UserDAO.Instance.GetUserCount();
+        }
+
+        public async Task<int> GetCustomerCount()
+        {
+            return await UserDAO.Instance.GetCustomerCount();
+        }
+
+        public async Task<int> GetSellerCount()
+        {
+            return await UserDAO.Instance.GetSellerCount();
+        }
+
+        public async Task<int> GetShipperCount()
+        {
+            return await UserDAO.Instance.GetShipperCount();
+        }
     }
 }
 

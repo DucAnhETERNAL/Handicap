@@ -49,5 +49,10 @@ namespace DataAccess
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<int> GetCategoryCount()
+        {
+            return await _context.Categories.CountAsync();
+        }
     }
 }
