@@ -14,6 +14,7 @@ namespace Repositories
         Task<bool> AddCategoryAsync(string categoryName);
         Task<bool> UpdateCategoryAsync(int categoryId, string categoryName);
         Task<bool> DeleteCategoryAsync(int categoryId);
+        Task<int> GetCategoryCount();
 
     }
 }

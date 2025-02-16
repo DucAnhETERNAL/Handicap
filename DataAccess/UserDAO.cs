@@ -50,5 +50,70 @@ namespace DataAccess
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<IEnumerable<User>> GetUserAll()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
+        public async Task<User> GetUserById(int id)
+        {
+            var user = await _context.Users
+                                      .Include(u => u.Orders)
+                                      .FirstOrDefaultAsync(u => u.UserId == id);
+
+            return user;
+        }
+
+
+        public async Task Add(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(User user)
+        {
+            var existingItem = await GetUserById(user.UserId);
+            if (existingItem != null)
+            {
+                _context.Entry(existingItem).CurrentValues.SetValues(user);
+            }
+            else
+            {
+                _context.Users.Add(user);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var user = await GetUserById(id);
+            if (user != null)
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<int> GetUserCount()
+        {
+            return await _context.Users.CountAsync();
+        }
+
+        public async Task<int> GetSellerCount()
+        {
+            return await _context.Users.CountAsync(u => u.RoleId == 1);
+        }
+
+        public async Task<int> GetCustomerCount()
+        {
+            return await _context.Users.CountAsync(u => u.RoleId == 2);
+        }
+        public async Task<int> GetShipperCount()
+        {
+            return await _context.Users.CountAsync(u => u.RoleId == 3);
+        }
+
     }
 }
+
