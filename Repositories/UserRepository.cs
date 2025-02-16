@@ -41,10 +41,9 @@ namespace Repositories
             return await UserDAO.Instance.EditProfileAsync(userId, fullName, phone);
         }
 
-        public Task LogoutAsync()
+        public async Task LogoutAsync()
         {
-            _httpContextAccessor.HttpContext.Session.Clear();
-            return Task.CompletedTask;
+            await Task.Run(() => { });
         }
     }
 }

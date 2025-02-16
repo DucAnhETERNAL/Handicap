@@ -1,0 +1,23 @@
+﻿@page
+@model SearchResultModel
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2>Search Results for "@Model.SearchQuery"</h2>
+
+@if (Model.Products.Any())
+{
+    <ul>
+        @foreach (var product in Model.Products)
+        {
+            <li>
+                <strong>@product.ProductName</strong> - $@product.Price
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No products found.</p>
+}

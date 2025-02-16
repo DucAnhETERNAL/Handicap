@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -19,6 +20,15 @@ namespace DataAccess
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.ProductId == id);
         }
+
+        public async Task<List<Product>> SearchProductsAsync(string searchQuery)
+        {
+            return await _context.Products
+                .Where(p => p.ProductName.Contains(searchQuery) ||
+                            p.Description.Contains(searchQuery))
+                .ToListAsync();
+        }
+
 
         public async Task Add(Product product)
         {

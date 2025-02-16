@@ -1,0 +1,25 @@
+﻿.navbar {
+    padding: 15px 0;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.nav-link {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.navbar .form-control {
+    width: 250px;
+}
+
+.navbar .bi {
+    font-size: 20px;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+}

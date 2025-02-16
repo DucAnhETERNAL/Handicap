@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Mvc.Razor
+@inherits RazorPage<dynamic>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Foodie - @ViewData["Title"]</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+
+    <!-- Custom styles -->
+    <link href="~/TemplateFiles/css/style.css" rel="stylesheet" />
+    <link href="~/TemplateFiles/css/responsive.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <header class="header_section bg-white shadow-sm">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <!-- Logo -->
+                <a class="navbar-brand d-flex align-items-center" asp-page="/Index">
+                    <img src="~/images/logo.png" alt="Organic" style="height: 40px; margin-right: 10px;">
+                    <span class="fw-bold text-dark">Handly</span>
+                </a>
+
+                <!-- Toggle Mobile -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <!-- Search Bar -->
+                    <form method="get" asp-page="/SearchResult" class="d-flex mx-auto" style="max-width: 600px; width: 100%;">
+                        <select class="form-select me-2" name="category">
+                            <option selected>All Categories</option>
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category.CategoryId">@category.CategoryName</option>
+                            }
+                        </select>
+                        <input class="form-control" type="search" name="searchQuery" placeholder="Search for more than 20,000 products..." aria-label="Search">
+                        <button class="btn btn-outline-secondary" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
+
+                    <!-- Main Menu -->
+                    <ul class="navbar-nav ms-3">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold text-dark" href="#" id="navbarDropdown" data-bs-toggle="dropdown">
+                                PAGES
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-page="/User/Products">All Products</a></li>
+                                <li><a class="dropdown-item" asp-page="/About">About Us</a></li>
+                                <li><a class="dropdown-item" asp-page="/Contact">Contact</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- User Icons -->
+                    <div class="d-flex align-items-center ms-3">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a href="/Users/Profile" class="me-3 text-dark">
+                                <i class="fa fa-user fs-5"></i> @User.Identity.Name
+                            </a>
+                            <a href="/Account/Logout" class="text-dark fw-semibold">Logout</a>
+                        }
+                        else
+                        {
+                            <a href="/Account/Login" class="text-dark fw-semibold">Login</a>
+                        }
+
+                        <a href="/Cart" class="text-dark">
+                            <i class="fa fa-shopping-cart fs-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main role="main" class="py-4">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer_section bg-light text-center py-3">
+        <div class="container">
+            &copy; 2025 - Organic Store - All Rights Reserved
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

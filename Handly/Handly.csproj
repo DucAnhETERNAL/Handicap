@@ -18,4 +18,9 @@
     <ProjectReference Include="..\Repositories\Repositories.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Shipper\" />
+    <Folder Include="Pages\Seller\" />
+  </ItemGroup>
+
 </Project>
