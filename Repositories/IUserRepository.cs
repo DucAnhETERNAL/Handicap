@@ -12,6 +12,6 @@ namespace Repositories
         Task<bool> RegisterAsync(string fullName, string email, string password);
         Task<User?> LoginAsync(string email, string password);
         Task<bool> EditProfileAsync(int userId, string fullName, string phone);
-
+        Task LogoutAsync();
     }
 }

@@ -5,24 +5,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Repositories
 {
     public class UserRepository : IUserRepository
     {
-        public async Task<bool> EditProfileAsync(int userId, string fullName, string phone)
-        {
-            return await UserDAO.Instance.EditProfileAsync(userId, fullName, phone);
-        }
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public async Task<User?> LoginAsync(string email, string password)
+        public UserRepository(IHttpContextAccessor httpContextAccessor)
         {
-            return await UserDAO.Instance.LoginAsync(email, password);
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> RegisterAsync(string fullName, string email, string password)
         {
             return await UserDAO.Instance.RegisterAsync(fullName, email, password);
         }
+
+        public async Task<User?> LoginAsync(string email, string password)
+        {
+            var user = await UserDAO.Instance.LoginAsync(email, password);
+            if (user != null)
+            {
+                _httpContextAccessor.HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                _httpContextAccessor.HttpContext.Session.SetString("UserEmail", user.Email);
+                _httpContextAccessor.HttpContext.Session.SetString("UserRole", user.Role.RoleName);
+            }
+            return user;
+        }
+
+        public async Task<bool> EditProfileAsync(int userId, string fullName, string phone)
+        {
+            return await UserDAO.Instance.EditProfileAsync(userId, fullName, phone);
+        }
+
+        public Task LogoutAsync()
+        {
+            _httpContextAccessor.HttpContext.Session.Clear();
+            return Task.CompletedTask;
+        }
     }
 }
+
