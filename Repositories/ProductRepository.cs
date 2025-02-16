@@ -1,25 +1,12 @@
-﻿using DataAccess;
-using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DataAccess;
+using Models;
 
 namespace Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        public async Task Add(Product product)
-        {
-            await ProductDAO.Instance.Add(product);
-        }
-
-        public async Task Delete(int id)
-        {
-            await ProductDAO.Instance.Delete(id);
-        }
-
         public async Task<IEnumerable<Product>> GetProductAll()
         {
             return await ProductDAO.Instance.GetProductAll();
@@ -30,9 +17,25 @@ namespace Repositories
             return await ProductDAO.Instance.GetProductById(id);
         }
 
-        public async Task<int> GetProductCount()
+        public async Task<List<Product>> SearchProductsAsync(string searchQuery)
         {
-            return await ProductDAO.Instance.GetProductCount();
+            return await ProductDAO.Instance.SearchProductsAsync(searchQuery);
+        }
+
+
+        public async Task Add(Product product)
+        {
+            await ProductDAO.Instance.Add(product);
+        }
+
+        public async Task Update(Product product)
+        {
+            await ProductDAO.Instance.Update(product);
+        }
+
+        public async Task Delete(int id)
+        {
+            await ProductDAO.Instance.Delete(id);
         }
 
         public async Task<IEnumerable<Product>> GetProductsByCategory(int categoryId)
@@ -40,9 +43,9 @@ namespace Repositories
             return await ProductDAO.Instance.GetProductsByCategory(categoryId);
         }
 
-        public async Task Update(Product product)
+        public async Task<int> GetProductCount()
         {
-            await ProductDAO.Instance.Update(product);
+            return await ProductDAO.Instance.GetProductCount();
         }
     }
 }

@@ -1,20 +1,22 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
+using Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace Handly.Pages
+public class IndexModel : PageModel
 {
-    public class IndexModel : PageModel
+    private readonly ICategoryRepository _categoryRepository;
+
+    public IndexModel(ICategoryRepository categoryRepository)
     {
-        private readonly ILogger<IndexModel> _logger;
+        _categoryRepository = categoryRepository;
+    }
 
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
+    public List<Category> Categories { get; set; } = new List<Category>();
 
-        public void OnGet()
-        {
-
-        }
+    public async Task OnGetAsync()
+    {
+        Categories = await _categoryRepository.GetAllCategoriesAsync();
     }
 }

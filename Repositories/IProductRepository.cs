@@ -11,6 +11,7 @@ namespace Repositories
     {
         Task<IEnumerable<Product>> GetProductAll();
         Task<Product?> GetProductById(int id);
+        Task<List<Product>> SearchProductsAsync(string searchQuery);
         Task Add(Product product);
         Task Update(Product product);
         Task Delete(int id);
