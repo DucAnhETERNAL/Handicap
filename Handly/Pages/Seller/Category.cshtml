@@ -1,0 +1,41 @@
+﻿@page
+@model Handly.Pages.Seller.CategoryModel
+@{
+}
+<h2>Quản lý Danh Mục</h2>
+
+<!-- Form thêm/sửa danh mục -->
+<form method="post">
+    <input type="hidden" asp-for="Category.CategoryId" />
+    <div>
+        <label>Tên danh mục:</label>
+        <input type="text" asp-for="Category.CategoryName" required />
+    </div>
+    <button type="submit">Lưu</button>
+</form>
+
+<!-- Danh sách danh mục -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Categories)
+        {
+            <tr>
+                <td>@item.CategoryId</td>
+                <td>@item.CategoryName</td>
+                <td>
+                    <a asp-page="Categories" asp-route-id="@item.CategoryId">Sửa</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.CategoryId">
+                        <button type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -48,5 +48,10 @@ namespace DataAccess
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<int> GetOrderCount()
+        {
+            return await _context.Orders.CountAsync();
+        }
     }
 }

@@ -20,6 +20,11 @@ namespace Repositories
             return await OrderDAO.Instance.GetOrderByIdAsync(orderId);
         }
 
+        public async Task<int> GetOrderCount()
+        {
+            return await OrderDAO.Instance.GetOrderCount();
+        }
+
         public async Task<List<Order>> GetOrdersByUserAsync(int userId)
         {
             return await OrderDAO.Instance.GetOrdersByUserAsync(userId);

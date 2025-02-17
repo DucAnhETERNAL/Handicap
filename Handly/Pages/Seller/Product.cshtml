@@ -1,0 +1,53 @@
+﻿@page
+@model Handly.Pages.Seller.ProductModel
+@{
+}
+<h2>Quản lý Sản phẩm</h2>
+
+<!-- Form thêm/sửa sản phẩm -->
+<form method="post">
+    <input type="hidden" asp-for="Product.ProductId" />
+    <div>
+        <label>Tên sản phẩm:</label>
+        <input type="text" asp-for="Product.ProductName" required />
+    </div>
+    <div>
+        <label>Giá:</label>
+        <input type="number" asp-for="Product.Price" required />
+    </div>
+    <div>
+        <label>Danh mục:</label>
+        <select asp-for="Product.CategoryId" asp-items="Model.Categories"></select>
+    </div>
+    <button type="submit">Lưu</button>
+</form>
+
+<!-- Danh sách sản phẩm -->
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Danh mục</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+                <td>@item.Category.CategoryName</td>
+                <td>
+                    <a asp-page="Products" asp-route-id="@item.ProductId">Sửa</a>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@item.ProductId">
+                        <button type="submit">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

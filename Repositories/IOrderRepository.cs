@@ -13,6 +13,7 @@ namespace Repositories
         Task<Order?> GetOrderByIdAsync(int orderId);
         Task<int> CreateOrderAsync(int userId, int cartId, decimal totalAmount);
         Task<bool> UpdateOrderStatusAsync(int orderId, string status);
+        Task<int> GetOrderCount();
 
     }
 }

@@ -13,6 +13,8 @@ namespace Handly.Pages.Seller
         private readonly ICategoryRepository _categoryRepository;
         
         public int TotalProducts { get; set; }
+        public int TotalCategory { get; set; }
+        public int TotalOrder { get; set; }
         
 
 
@@ -20,12 +22,16 @@ namespace Handly.Pages.Seller
         {
             _userRepository = userRepository;
             _productRepository = productRepository;
+            _orderRepository = orderRepository;
+            _categoryRepository = categoryRepository;
 
         }
 
         public async Task OnGetAsync()
         {
             TotalProducts = await _productRepository.GetProductCount();
+            TotalCategory = await _categoryRepository.GetCategoryCount();
+            TotalOrder = await _orderRepository.
 
         }
     }
