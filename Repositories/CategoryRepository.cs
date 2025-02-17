@@ -39,5 +39,6 @@ namespace Repositories
         {
             return await CategoryDAO.Instance.UpdateCategoryAsync(categoryId, categoryName);
         }
+
     }
 }

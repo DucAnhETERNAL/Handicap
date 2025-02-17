@@ -8,6 +8,11 @@ namespace DataAccess
 {
     public class UserDAO : SingletonBase<UserDAO>
     {
+
+        public async Task<User?> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+        }
         public async Task<bool> RegisterAsync(string fullName, string email, string password)
         {
             if (await _context.Users.AnyAsync(u => u.Email == email))
@@ -38,15 +43,19 @@ namespace DataAccess
                 .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
 
-        public async Task<bool> EditProfileAsync(int userId, string fullName, string phone)
+        public async Task<bool> UpdateProfileAsync(int userId, string fullName, string email, string phone)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await GetUserByIdAsync(userId);
             if (user == null) return false;
 
+            // Kiểm tra nếu email đã tồn tại trong hệ thống nhưng không phải của user hiện tại
+            var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.UserId != userId);
+            if (existingUser != null) return false;
+
             user.FullName = fullName;
+            user.Email = email;
             user.Phone = phone;
 
-            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return true;
         }

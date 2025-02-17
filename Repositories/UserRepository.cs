@@ -36,9 +36,9 @@ namespace Repositories
             return user;
         }
 
-        public async Task<bool> EditProfileAsync(int userId, string fullName, string phone)
+        public async Task<bool> UpdateProfileAsync(int userId, string fullName, string email, string phone)
         {
-            return await UserDAO.Instance.EditProfileAsync(userId, fullName, phone);
+            return await UserDAO.Instance.UpdateProfileAsync(userId, fullName, email, phone);
         }
 
         public async Task LogoutAsync()
@@ -51,7 +51,7 @@ namespace Repositories
             return await UserDAO.Instance.GetUserAll();
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             return await UserDAO.Instance.GetUserById(id);
         }

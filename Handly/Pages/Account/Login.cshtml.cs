@@ -57,7 +57,7 @@ public class LoginModel : PageModel
         switch (user.Role.RoleName.ToLower())
         {
             case "admin":
-                return RedirectToPage("/Admin/DashBoard");
+                return RedirectToPage("/Admin/Dashboard");
             case "seller":
                 return RedirectToPage("/Seller/DashBoard");
             case "user":

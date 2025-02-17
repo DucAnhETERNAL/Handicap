@@ -8,7 +8,8 @@ namespace Handly.Pages.Admin
     {
         private readonly IUserRepository _userRepository;
         private readonly IProductRepository _productRepository;
-        
+        private readonly IOrderRepository _orderRepository;
+
 
         public int TotalUsers { get; set; }
         public int TotalProducts { get; set; }
@@ -17,11 +18,12 @@ namespace Handly.Pages.Admin
         public int TotalCustomer { get; set; }
         public int TotalShipper { get; set; }
 
-        public DashboardModel(IProductRepository productRepository, IUserRepository userRepository)
+        public DashboardModel(IProductRepository productRepository, IUserRepository userRepository, IOrderRepository orderRepository)
         {
             _userRepository = userRepository;
             _productRepository = productRepository;
-           
+            _orderRepository = orderRepository;
+
         }
 
         public async Task OnGetAsync()

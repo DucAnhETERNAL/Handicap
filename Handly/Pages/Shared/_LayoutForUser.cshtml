@@ -73,7 +73,7 @@
                     <div class="d-flex align-items-center ms-3">
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <a href="/Users/Profile" class="me-3 text-dark">
+                            <a href="/User/Profile" class="me-3 text-dark">
                                 <i class="fa fa-user fs-5"></i> @User.Identity.Name
                             </a>
                             <a href="/Account/Logout" class="text-dark fw-semibold">Logout</a>
@@ -83,7 +83,7 @@
                             <a href="/Account/Login" class="text-dark fw-semibold">Login</a>
                         }
 
-                        <a href="/Cart" class="text-dark">
+                        <a href="/User/Cart" class="text-dark">
                             <i class="fa fa-shopping-cart fs-5"></i>
                         </a>
                     </div>
@@ -100,7 +100,7 @@
 
     <footer class="footer_section bg-light text-center py-3">
         <div class="container">
-            &copy; 2025 - Organic Store - All Rights Reserved
+            &copy; 2025 - Handly Store - All Rights Reserved
         </div>
     </footer>
 

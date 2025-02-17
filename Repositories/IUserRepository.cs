@@ -11,10 +11,10 @@ namespace Repositories
     {
         Task<bool> RegisterAsync(string fullName, string email, string password);
         Task<User?> LoginAsync(string email, string password);
-        Task<bool> EditProfileAsync(int userId, string fullName, string phone);
+        Task<bool> UpdateProfileAsync(int userId, string fullName, string email, string phone);
         Task LogoutAsync();
         Task<IEnumerable<User>> GetUserAll();
-        Task<User> GetUserById(int id);
+        Task<User>? GetUserByIdAsync(int id);
         Task Add(User user);
         Task Update(User user);
         Task Delete(int id);

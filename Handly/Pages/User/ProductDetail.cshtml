@@ -1,0 +1,34 @@
+﻿@page "{id:int}"
+@model ProductDetailModel
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = Model.Product?.ProductName ?? "Sản phẩm không tồn tại";
+    Layout = "~/Pages/Shared/_LayoutForUser.cshtml";
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+@if (Model.Product != null)
+{
+    <h1>@Model.Product.ProductName</h1>
+    <img src="@Model.Product.ImageUrl" alt="@Model.Product.ProductName" width="300" />
+    <p>@Model.Product.Description</p>
+    <p><strong>Giá:</strong> @Model.Product.Price.ToString("C")</p>
+
+    @if (!string.IsNullOrEmpty(userId))
+    {
+        <form method="post" asp-page="/User/ProductDetail" asp-page-handler="AddToCart">
+            <input type="hidden" name="productId" value="@Model.Product.ProductId" />
+            <input type="hidden" name="userId" value="@userId" />
+            <button type="submit" class="btn btn-success">Thêm vào giỏ hàng</button>
+        </form>
+    }
+    else
+    {
+        <p style="color: red;">Vui lòng <a href="/Account/Login">đăng nhập</a> để thêm vào giỏ hàng.</p>
+    }
+}
+else
+{
+    <p style="color: red;">Không tìm thấy sản phẩm.</p>
+}

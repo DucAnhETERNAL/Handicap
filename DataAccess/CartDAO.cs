@@ -10,20 +10,38 @@ namespace DataAccess
     {
         public async Task<List<Cart>> GetUserCartAsync(int userId)
         {
-            return await _context.Carts
+            if (userId <= 0)
+            {
+                Console.WriteLine("userId không hợp lệ khi lấy giỏ hàng.");
+                return new List<Cart>();
+            }
+
+            var cartItems = await _context.Carts
                 .Where(c => c.UserId == userId && c.Status == "Active")
                 .Include(c => c.Product)
                 .ToListAsync();
+
+            Console.WriteLine($"Lấy giỏ hàng thành công: {cartItems.Count} sản phẩm cho User {userId}");
+
+            return cartItems;
         }
+
 
         public async Task AddToCartAsync(int userId, int productId, int quantity)
         {
+            if (userId <= 0 || productId <= 0 || quantity <= 0)
+            {
+                Console.WriteLine("Lỗi: userId hoặc productId không hợp lệ.");
+                return;
+            }
+
             var existingCartItem = await _context.Carts
                 .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId && c.Status == "Active");
 
             if (existingCartItem != null)
             {
                 existingCartItem.Quantity += quantity;
+                Console.WriteLine($"Đã cập nhật số lượng sản phẩm ID {productId} trong giỏ hàng của User {userId}.");
             }
             else
             {
@@ -35,6 +53,7 @@ namespace DataAccess
                     Status = "Active"
                 };
                 _context.Carts.Add(cartItem);
+                Console.WriteLine($"Đã thêm sản phẩm mới ID {productId} vào giỏ hàng của User {userId}.");
             }
 
             await _context.SaveChangesAsync();

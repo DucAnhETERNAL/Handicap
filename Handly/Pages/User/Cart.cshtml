@@ -1,0 +1,41 @@
+﻿@page
+@model CartModel
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "_LayoutForUser";
+}
+
+<h1>Giỏ hàng của bạn</h1>
+
+@if (Model.CartItems.Count == 0)
+{
+    <p>Giỏ hàng trống.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Giá</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Product.ProductName</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * item.Product.Price)</td>
+                    <td>
+                        <form method="post" asp-page="/Cart" asp-page-handler="Remove" asp-route-id="@item.CartId">
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

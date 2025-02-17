@@ -11,14 +11,23 @@ namespace DataAccess
     {
         public async Task<IEnumerable<Product>> GetProductAll()
         {
-            return await _context.Products.Include(p => p.Category).ToListAsync();
+            return await _context.Products
+                .Include(p => p.Category)
+                .Select(p => new Product
+                {
+                    ProductId = p.ProductId,
+                    ProductName = p.ProductName,
+                    Description = p.Description,
+                    Price = p.Price,
+                    ImageUrl = p.ImageUrl,  // Đảm bảo có dữ liệu hình ảnh
+                    CategoryId = p.CategoryId
+                })
+                .ToListAsync();
         }
 
         public async Task<Product?> GetProductById(int id)
         {
-            return await _context.Products
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.ProductId == id);
+            return await _context.Products.FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
         public async Task<List<Product>> SearchProductsAsync(string searchQuery)

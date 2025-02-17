@@ -1,0 +1,29 @@
+﻿@page
+@model EditProfileModel
+@{
+    Layout = "/Pages/Shared/_LayoutForUser.cshtml";
+    ViewData["Title"] = "Edit Profile";
+}
+
+<h2>Edit Profile</h2>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<form method="post">
+    <div class="form-group">
+        <label>Full Name</label>
+        <input asp-for="FullName" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input asp-for="Email" type="email" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Phone</label>
+        <input asp-for="Phone" type="text" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+</form>

@@ -1,0 +1,20 @@
+﻿@page
+@model ProfileModel
+@{
+    Layout = "/Pages/Shared/_LayoutForUser.cshtml";
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container">
+    <h2 class="my-4">User Profile</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">@Model.FullName</h4>
+            <p class="card-text"><strong>Email:</strong> @Model.Email</p>
+            <p class="card-text"><strong>Phone:</strong> @Model.Phone</p>
+
+            <a href="/User/EditProfile" class="btn btn-primary">Edit Profile</a>
+        </div>
+    </div>
+</div>
