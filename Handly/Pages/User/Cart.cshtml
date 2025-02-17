@@ -1,41 +1,70 @@
 ﻿@page
 @model CartModel
 @{
-    ViewData["Title"] = "Cart";
-    Layout = "_LayoutForUser";
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "/Pages/Shared/_LayoutForUser.cshtml";
 }
 
-<h1>Giỏ hàng của bạn</h1>
+<h2>Giỏ hàng</h2>
 
-@if (Model.CartItems.Count == 0)
-{
-    <p>Giỏ hàng trống.</p>
-}
-else
-{
+<form method="post" asp-page="/User/Cart" asp-page-handler="Checkout">
+    <input type="hidden" name="userId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+
     <table class="table">
         <thead>
             <tr>
+                <th>Chọn</th>
                 <th>Tên sản phẩm</th>
-                <th>Số lượng</th>
                 <th>Giá</th>
-                <th>Hành động</th>
+                <th>Số lượng</th>
+                <th>Tổng cộng</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.CartItems)
             {
                 <tr>
-                    <td>@item.Product.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>@(item.Quantity * item.Product.Price)</td>
                     <td>
-                        <form method="post" asp-page="/Cart" asp-page-handler="Remove" asp-route-id="@item.CartId">
-                            <button type="submit" class="btn btn-danger">Xóa</button>
-                        </form>
+                        <input type="checkbox" name="selectedItems" value="@item.CartId" class="select-item" data-price="@item.Product.Price" data-quantity="@item.Quantity" />
                     </td>
+                    <td>@item.Product.ProductName</td>
+                    <td>@item.Product.Price.ToString("N2")</td>
+                    <td>
+                        <button type="submit" asp-page-handler="DecreaseQuantity" asp-route-id="@item.CartId" class="btn btn-sm btn-secondary">-</button>
+                        <span>@item.Quantity</span>
+                        <button type="submit" asp-page-handler="IncreaseQuantity" asp-route-id="@item.CartId" class="btn btn-sm btn-secondary">+</button>
+                    </td>
+                    <td>@((item.Product.Price * item.Quantity).ToString("N2"))</td>
                 </tr>
             }
         </tbody>
     </table>
-}
+
+    <h4>Tổng tiền: <span id="totalAmount">0.00</span> VND</h4>
+
+    <button type="submit" class="btn btn-primary">Thanh toán</button>
+</form>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll(".select-item");
+        const totalAmount = document.getElementById("totalAmount");
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", updateTotal);
+        });
+
+        function updateTotal() {
+            let total = 0;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    let price = parseFloat(checkbox.getAttribute("data-price"));
+                    let quantity = parseInt(checkbox.getAttribute("data-quantity"));
+                    total += price * quantity;
+                }
+            });
+            totalAmount.textContent = total.toFixed(2);
+        }
+    });
+</script>

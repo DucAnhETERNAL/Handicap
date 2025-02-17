@@ -38,10 +38,20 @@ namespace DataAccess
 
         public async Task<User?> LoginAsync(string email, string password)
         {
-            return await _context.Users
+            var user = await _context.Users
                 .Include(u => u.Role)
                 .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+
+            if (user == null)
+            {
+                Console.WriteLine($"Đăng nhập thất bại: Không tìm thấy user với email {email}");
+                return null;
+            }
+
+            Console.WriteLine($"Đăng nhập thành công: UserId = {user.UserId}, Role = {user.Role.RoleName}");
+            return user;
         }
+
 
         public async Task<bool> UpdateProfileAsync(int userId, string fullName, string email, string phone)
         {

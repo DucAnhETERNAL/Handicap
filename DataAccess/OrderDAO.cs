@@ -31,7 +31,8 @@ namespace DataAccess
                 BuyerId = userId,
                 CartId = cartId,
                 TotalAmount = totalAmount,
-                Status = "Processing"
+                Status = "Processing",
+                CreatedAt = DateTime.UtcNow
             };
 
             _context.Orders.Add(order);
@@ -47,6 +48,21 @@ namespace DataAccess
             order.Status = status;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> AddOrderAsync(Order order)
+        {
+            _context.Orders.Add(order);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<Order?> GetLatestOrderByUserAsync(int userId)
+        {
+            return await _context.Orders
+                .Where(o => o.BuyerId == userId)
+                .OrderByDescending(o => o.CreatedAt)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -75,5 +75,19 @@ namespace DataAccess
             _context.Carts.RemoveRange(cartItems);
             await _context.SaveChangesAsync();
         }
+        public async Task UpdateCartItemAsync(Cart cartItem)
+        {
+            _context.Carts.Update(cartItem);
+            await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<List<Cart>> GetSelectedItemsAsync(List<int> selectedItemIds)
+        {
+            return await _context.Carts
+                .Where(c => selectedItemIds.Contains(c.CartId))
+                .Include(c => c.Product)
+                .ToListAsync();
+        }
     }
 }

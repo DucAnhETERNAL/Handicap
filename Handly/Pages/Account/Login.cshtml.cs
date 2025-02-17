@@ -35,36 +35,28 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        
         var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-            new Claim(ClaimTypes.Name, user.FullName),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.RoleName)
-        };
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.Name, user.FullName),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role.RoleName)
+    };
 
         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var authProperties = new AuthenticationProperties
-        {
-            IsPersistent = true 
-        };
+        var authProperties = new AuthenticationProperties { IsPersistent = true };
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             new ClaimsPrincipal(claimsIdentity), authProperties);
 
-    
-        switch (user.Role.RoleName.ToLower())
-        {
-            case "admin":
-                return RedirectToPage("/Admin/Dashboard");
-            case "seller":
-                return RedirectToPage("/Seller/DashBoard");
-            case "user":
-                return RedirectToPage("/Index");
-            case "shipper":
-                return RedirectToPage("/Shipper/DashBoard");
-        }
+        // 🔹 Thêm session
+        HttpContext.Session.SetString("UserId", user.UserId.ToString());
+        HttpContext.Session.SetString("UserEmail", user.Email);
+        HttpContext.Session.SetString("UserRole", user.Role.RoleName);
+
+        Console.WriteLine($"🟢 Session lưu UserId = {HttpContext.Session.GetString("UserId")}");
+
         return RedirectToPage("/Index");
     }
+
 }

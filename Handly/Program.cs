@@ -2,12 +2,16 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using DataAccess;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add session and distributed memory cache
 builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddHttpClient<PayOSService>();
+builder.Services.AddSingleton<PayOSService>();
 
 // Configure database context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
